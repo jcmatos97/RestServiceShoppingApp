@@ -8,6 +8,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootApplication
 public class ShoppingAppApplication {
 
@@ -20,7 +23,8 @@ public class ShoppingAppApplication {
 
 	@Bean
 	InitializingBean groupSeed() {
-		return () -> {
+ 		if(groupRepository.count() <= 3){
+			return () -> {
 			Group g1 = new Group();
 			g1.setName("Products");
 			g1.setStatus(true);
@@ -37,6 +41,8 @@ public class ShoppingAppApplication {
 			groupRepository.save(g2);
 			groupRepository.save(g3);
 		};
+		}
+		return null;
 	}
 }
 
