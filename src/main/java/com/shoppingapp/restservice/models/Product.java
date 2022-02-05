@@ -13,12 +13,13 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class Product {
-    Product(){}
+    public Product(){}
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
     private String name;
+
     private String image;
 
     private String description;
