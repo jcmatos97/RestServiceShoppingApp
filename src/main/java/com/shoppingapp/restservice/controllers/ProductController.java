@@ -39,7 +39,6 @@ public class ProductController {
 
     @PutMapping("/products/{id}")
     Product updateProduct(@RequestBody Product newProduct, @PathVariable Integer id) {
-
         return productRepository.findById(id)
                 .map(product -> {
                     product.setName(newProduct.getName());
@@ -47,6 +46,7 @@ public class ProductController {
                     product.setPrice(newProduct.getPrice());
                     product.setStock(newProduct.getStock());
                     product.setStatus(newProduct.getStatus());
+                    product.setImage(newProduct.getImage());
                     return productRepository.save(newProduct);
                 })
                 .orElseGet(() -> {
