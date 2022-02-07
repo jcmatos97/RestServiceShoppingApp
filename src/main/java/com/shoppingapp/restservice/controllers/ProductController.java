@@ -1,5 +1,7 @@
 package com.shoppingapp.restservice.controllers;
 
+import com.shoppingapp.restservice.models.Category;
+import com.shoppingapp.restservice.models.Group;
 import com.shoppingapp.restservice.models.repositories.IProductRepository;
 import com.shoppingapp.restservice.models.Product;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -30,6 +34,17 @@ public class ProductController {
     Product getProductById(@PathVariable Integer id) {
         return productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
+    }
+
+    @GetMapping("/products/{id}/categories")
+    List<Category> getProductByIdWithCategories(@PathVariable Integer id) {
+        List<Category> categoryList = new ArrayList<>();
+        List<Group> groupList = new ArrayList<>();
+        productRepository.getCategories(id).forEach(obj -> {
+            Group gr = new Group((Integer)obj.get(4), (String) obj.get(5), (Boolean) obj.get(6));
+            categoryList.add(new Category((Integer) obj.get(0), gr, (String) obj.get(1), (String)obj.get(2), (Boolean)obj.get(3)));
+        });
+        return categoryList;
     }
 
     @PostMapping("/products")

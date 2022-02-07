@@ -15,6 +15,12 @@ import java.util.Set;
 @Table(name="group_category")
 public class Group {
     public Group(){}
+
+    public Group(Integer id, String name, Boolean status){
+        this.id = id;
+        this.name = name;
+        this.status = status;
+    }
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;

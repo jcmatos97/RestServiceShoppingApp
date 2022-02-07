@@ -14,6 +14,14 @@ import java.util.Set;
 public class Category {
     public Category(){}
 
+    public Category(Integer id, Group group, String name, String description, Boolean status){
+        this.id = id;
+        this.group = group;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
