@@ -22,6 +22,14 @@ public class Category {
         this.status = status;
     }
 
+    public Category(Integer id, String name, String description, Boolean status){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+    }
+
+
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;

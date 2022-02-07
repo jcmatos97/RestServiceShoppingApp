@@ -1,5 +1,6 @@
 package com.shoppingapp.restservice.controllers;
 
+import com.shoppingapp.restservice.models.Category;
 import com.shoppingapp.restservice.models.Group;
 import com.shoppingapp.restservice.models.repositories.IGroupRepository;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,6 +31,15 @@ public class GroupController {
     Group getGroupById(@PathVariable Integer id) {
         return groupRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
+    }
+
+    @GetMapping("/groups/{id}/categories")
+    List<Category> getGroupByIdWithCategories(@PathVariable Integer id) {
+        List<Category> categoryList = new ArrayList<>();
+        groupRepository.getCategories(id).forEach(obj -> {
+            categoryList.add(new Category((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (Boolean)obj.get(3)));
+        });
+        return categoryList;
     }
 
     @PostMapping("/groups")
