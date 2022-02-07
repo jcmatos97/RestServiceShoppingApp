@@ -23,7 +23,7 @@ public class ShoppingAppApplication {
 
 	@Bean
 	InitializingBean groupSeed() {
- 		if(groupRepository.count() <= 3){
+ 		if(groupRepository.count() == 0){
 			return () -> {
 			Group g1 = new Group();
 			g1.setName("Products");
@@ -40,7 +40,7 @@ public class ShoppingAppApplication {
 			groupRepository.save(g1);
 			groupRepository.save(g2);
 			groupRepository.save(g3);
-		};
+			};
 		}
 		return null;
 	}
