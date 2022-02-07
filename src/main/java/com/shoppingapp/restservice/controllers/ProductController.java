@@ -1,6 +1,6 @@
 package com.shoppingapp.restservice.controllers;
 
-import com.shoppingapp.restservice.models.IProductRepository;
+import com.shoppingapp.restservice.models.repositories.IProductRepository;
 import com.shoppingapp.restservice.models.Product;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;

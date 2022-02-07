@@ -1,15 +1,12 @@
 package com.shoppingapp.restservice;
 
 import com.shoppingapp.restservice.models.Group;
-import com.shoppingapp.restservice.models.IGroupRepository;
+import com.shoppingapp.restservice.models.repositories.IGroupRepository;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootApplication
 public class ShoppingAppApplication {

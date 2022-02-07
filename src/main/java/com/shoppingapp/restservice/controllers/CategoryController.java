@@ -1,6 +1,8 @@
 package com.shoppingapp.restservice.controllers;
 
 import com.shoppingapp.restservice.models.*;
+import com.shoppingapp.restservice.models.repositories.ICategoryRepository;
+import com.shoppingapp.restservice.models.repositories.IProductRepository;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +11,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.Array;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
 public class CategoryController {
+
     private ICategoryRepository categoryRepository;
 
     CategoryController(ICategoryRepository categoryRepository){
@@ -28,6 +35,15 @@ public class CategoryController {
     Category getCategoryById(@PathVariable Integer id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
+    }
+
+    @GetMapping("/categories/{id}/products")
+    List<Product> getCategoryByIdWithProducts(@PathVariable Integer id) {
+        List<Product> productList = new ArrayList<>();
+        categoryRepository.getProducts(id).forEach(obj -> {
+            productList.add(new Product((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (String)obj.get(3), (BigDecimal) obj.get(4), (Integer)obj.get(5), (BigDecimal)obj.get(6), (Boolean)obj.get(7)));
+        });
+        return productList;
     }
 
     @PostMapping("/categories")
