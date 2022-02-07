@@ -28,5 +28,7 @@ public class Product {
 
     private Integer stock;
 
+    private BigDecimal discount;
+
     private Boolean status;
 }

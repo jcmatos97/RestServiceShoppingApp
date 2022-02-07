@@ -46,6 +46,7 @@ public class ProductController {
                     product.setPrice(newProduct.getPrice());
                     product.setStock(newProduct.getStock());
                     product.setStatus(newProduct.getStatus());
+                    product.setDiscount(newProduct.getDiscount());
                     product.setImage(newProduct.getImage());
                     return productRepository.save(newProduct);
                 })
