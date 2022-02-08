@@ -33,6 +33,10 @@ public class Address {
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
+    @OneToMany(mappedBy = "address", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Transaction> transactions;
+
     private String street;
 
     private String number;

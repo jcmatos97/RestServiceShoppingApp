@@ -38,6 +38,10 @@ public class User {
     @JsonIgnore
     private Set<Address> addresses;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Transaction> transactions;
+
     private String name;
 
     private String lastname;

@@ -47,6 +47,10 @@ public class Category {
     @JsonIgnore
     private Set<User> users;
 
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Transaction> transactions;
+
     private String name;
 
     private String description;
