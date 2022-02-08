@@ -34,6 +34,10 @@ public class User {
     @JoinColumn(name = "id_category", nullable = false)
     private Category category;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Address> addresses;
+
     private String name;
 
     private String lastname;
