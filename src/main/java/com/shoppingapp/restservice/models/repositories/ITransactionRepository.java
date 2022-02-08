@@ -13,15 +13,15 @@ public interface ITransactionRepository extends JpaRepository<Transaction, Integ
     @Query(value = "SELECT u.id, u.name, u.lastname, u.email, u.password, u.status " +
             "FROM user u JOIN transaction t ON u.id = t.id_user " +
             "WHERE t.id = :idPARAM", nativeQuery = true)
-    ArrayList getUser(@Param("idPARAM") int id);
+    Object getUser(@Param("idPARAM") int id);
 
     @Query(value = "SELECT a.id, a.street, a.number, a.city, a.postal_code, a.country, a.status " +
             "FROM address a JOIN transaction t ON a.id = t.id_address " +
             "WHERE t.id = :idPARAM", nativeQuery = true)
-    ArrayList getAddress(@Param("idPARAM") int id);
+    Object getAddress(@Param("idPARAM") int id);
 
     @Query(value = "SELECT c.id, c.name, c.description, c.status " +
             "FROM category c JOIN transaction t ON c.id = t.id_category " +
             "WHERE t.id = :idPARAM", nativeQuery = true)
-    ArrayList getCategory(@Param("idPARAM") int id);
+    Object getCategory(@Param("idPARAM") int id);
 }

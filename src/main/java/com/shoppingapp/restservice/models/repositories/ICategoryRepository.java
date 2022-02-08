@@ -23,4 +23,9 @@ public interface ICategoryRepository extends JpaRepository<Category,Integer>{
             "JOIN category c ON u.id_category = c.id " +
             "WHERE c.id = :idPARAM", nativeQuery = true)
     List<ArrayList> getUsers(@Param("idPARAM") int id);
+
+    @Query(value = "SELECT t.id, t.date_transaction, t.date_shipping, t.status " +
+            "FROM transaction t JOIN category c ON t.id_category = c.id " +
+            "WHERE c.id = :idPARAM", nativeQuery = true)
+    List<ArrayList> getTransactions(@Param("idPARAM") int id);
 }

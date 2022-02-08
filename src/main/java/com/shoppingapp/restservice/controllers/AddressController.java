@@ -2,9 +2,12 @@ package com.shoppingapp.restservice.controllers;
 
 import com.shoppingapp.restservice.models.Address;
 import com.shoppingapp.restservice.models.Category;
+import com.shoppingapp.restservice.models.Transaction;
 import com.shoppingapp.restservice.models.repositories.IAddressRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,15 @@ public class AddressController {
     Address getAddressById(@PathVariable Integer id) {
         return addressRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException());
+    }
+
+    @GetMapping("/addresses/{id}/transactions")
+    List<Transaction> getAddressByIdWithTransactions(@PathVariable Integer id) {
+        List<Transaction> transactionList = new ArrayList<>();
+        addressRepository.getTransactions(id).forEach(obj -> {
+            transactionList.add(new Transaction((Integer) obj.get(0), (Date) obj.get(1), (Date)obj.get(2), (Boolean)obj.get(3)));
+        });
+        return transactionList;
     }
 
     @PostMapping("/addresses")

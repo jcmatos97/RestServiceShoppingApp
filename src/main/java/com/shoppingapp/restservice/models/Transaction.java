@@ -15,6 +15,13 @@ import java.util.Set;
 public class Transaction {
     public Transaction(){}
 
+    public Transaction(Integer id, Date date_transaction, Date date_shipping, Boolean status){
+        this.id = id;
+        this.date_transaction = date_transaction;
+        this.date_shipping = date_shipping;
+        this.status = status;
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;

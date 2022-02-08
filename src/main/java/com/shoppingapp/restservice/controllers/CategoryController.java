@@ -15,6 +15,7 @@ import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,15 @@ public class CategoryController {
             productList.add(new Product((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (String)obj.get(3), (BigDecimal) obj.get(4), (Integer)obj.get(5), (BigDecimal)obj.get(6), (Boolean)obj.get(7)));
         });
         return productList;
+    }
+
+    @GetMapping("/categories/{id}/transactions")
+    List<Transaction> getCategoryByIdWithTransactions(@PathVariable Integer id) {
+        List<Transaction> transactionList = new ArrayList<>();
+        categoryRepository.getTransactions(id).forEach(obj -> {
+            transactionList.add(new Transaction((Integer) obj.get(0), (Date) obj.get(1), (Date)obj.get(2), (Boolean)obj.get(3)));
+        });
+        return transactionList;
     }
 
     @GetMapping("/categories/{id}/users")

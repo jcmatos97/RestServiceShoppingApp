@@ -14,4 +14,9 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
             "JOIN user u ON u.id = a.id_user " +
             "WHERE u.id = :idPARAM", nativeQuery = true)
     List<ArrayList> getAddresses(@Param("idPARAM") int id);
+
+    @Query(value = "SELECT t.id, t.date_transaction, t.date_shipping, t.status " +
+            "FROM transaction t JOIN user u ON t.id_user = u.id " +
+            "WHERE u.id = :idPARAM", nativeQuery = true)
+    List<ArrayList> getTransactions(@Param("idPARAM") int id);
 }
