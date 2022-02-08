@@ -1,9 +1,7 @@
 package com.shoppingapp.restservice.controllers;
 
-import com.shoppingapp.restservice.models.Address;
-import com.shoppingapp.restservice.models.Category;
-import com.shoppingapp.restservice.models.Transaction;
-import com.shoppingapp.restservice.models.User;
+import com.shoppingapp.restservice.models.*;
+import com.shoppingapp.restservice.models.repositories.IProductRepository;
 import com.shoppingapp.restservice.models.repositories.ITransactionRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,9 +12,11 @@ import java.util.List;
 public class TransactionController {
 
     private ITransactionRepository transactionRepository;
+    private IProductRepository productRepository;
 
-    TransactionController(ITransactionRepository transactionRepository){
+    TransactionController(ITransactionRepository transactionRepository, IProductRepository productRepository){
         this.transactionRepository = transactionRepository;
+        this.productRepository = productRepository;
     }
 
     @GetMapping("/transactions")
@@ -49,6 +49,16 @@ public class TransactionController {
         Object[] obj = (Object[]) transactionRepository.getCategory(id);
         Category category = new Category((Integer) obj[0], (String) obj[1], (String) obj[2], (Boolean) obj[3]);
         return category;
+    }
+
+    @GetMapping("/transactions/{id}/details")
+    List<DetailTransaction> getTransactionByIdWithDetails(@PathVariable Integer id) {
+        List<DetailTransaction> detailTransactionList = new ArrayList<>();
+        transactionRepository.getDetails(id).forEach(obj -> {
+            Product p = productRepository.findById((Integer)obj.get(1)).orElseThrow(() -> new RuntimeException());;
+            detailTransactionList.add(new DetailTransaction((Integer) obj.get(0), p));
+        });
+        return detailTransactionList;
     }
 
     @PostMapping("/transactions")

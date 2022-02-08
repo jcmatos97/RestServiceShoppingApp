@@ -24,4 +24,9 @@ public interface ITransactionRepository extends JpaRepository<Transaction, Integ
             "FROM category c JOIN transaction t ON c.id = t.id_category " +
             "WHERE t.id = :idPARAM", nativeQuery = true)
     Object getCategory(@Param("idPARAM") int id);
+
+    @Query(value = "SELECT dt.id, dt.id_product " +
+            "FROM detail_transaction dt JOIN transaction t ON dt.id_transaction = t.id " +
+            "WHERE t.id = :idPARAM", nativeQuery = true)
+    List<ArrayList> getDetails(@Param("idPARAM") int id);
 }

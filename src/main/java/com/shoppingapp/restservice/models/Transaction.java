@@ -41,6 +41,10 @@ public class Transaction {
     @JoinColumn(name = "id_category", nullable = false)
     private Category category;
 
+    @OneToMany(mappedBy = "transaction", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<DetailTransaction> detailTransactions;
+
     private Date date_transaction;
 
     private Date date_shipping;
