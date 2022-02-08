@@ -43,6 +43,10 @@ public class Category {
     @JsonIgnore
     private Set<ProductCategory> productCategories;
 
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<User> users;
+
     private String name;
 
     private String description;

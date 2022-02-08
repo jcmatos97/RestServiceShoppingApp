@@ -46,6 +46,15 @@ public class CategoryController {
         return productList;
     }
 
+    @GetMapping("/categories/{id}/users")
+    List<User> getCategoryByIdWithUsers(@PathVariable Integer id) {
+        List<User> userList = new ArrayList<>();
+        categoryRepository.getUsers(id).forEach(obj -> {
+            userList.add(new User((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (String)obj.get(3), (String)obj.get(4), (Boolean)obj.get(5)));
+        });
+        return userList;
+    }
+
     @PostMapping("/categories")
     Category createCategory(@RequestBody Category newCategory) {
         return categoryRepository.save(newCategory);
