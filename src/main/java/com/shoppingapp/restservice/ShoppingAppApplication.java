@@ -1,6 +1,7 @@
 package com.shoppingapp.restservice;
 
 import com.shoppingapp.restservice.models.Group;
+import com.shoppingapp.restservice.models.User;
 import com.shoppingapp.restservice.models.repositories.IGroupRepository;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ShoppingAppApplication {
 	}
 
 	@Bean
-	InitializingBean groupSeed() {
+	InitializingBean dataSeed() {
  		if(groupRepository.count() == 0){
 			return () -> {
 			Group g1 = new Group();
@@ -46,9 +47,11 @@ public class ShoppingAppApplication {
 			g3.setName("Users");
 			g3.setStatus(true);
 
-			groupRepository.save(g1);
-			groupRepository.save(g2);
-			groupRepository.save(g3);
+			Group savedG1 = groupRepository.save(g1);
+			Group savedG2 = groupRepository.save(g2);
+			Group savedG3 = groupRepository.save(g3);
+
+
 			};
 		}
 		return null;
