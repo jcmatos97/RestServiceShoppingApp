@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IUserRepository extends JpaRepository<User, Integer> {
+
     @Query(value = "SELECT a.id, a.street, a.number, a.city, a.postal_code, a.country, a.status FROM address a " +
             "JOIN user u ON u.id = a.id_user " +
             "WHERE u.id = :idPARAM", nativeQuery = true)
@@ -19,4 +20,6 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
             "FROM transaction t JOIN user u ON t.id_user = u.id " +
             "WHERE u.id = :idPARAM", nativeQuery = true)
     List<ArrayList> getTransactions(@Param("idPARAM") int id);
+
+    User findByUsername(String username);
 }

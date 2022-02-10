@@ -4,31 +4,91 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Data
 @AllArgsConstructor
-public class User {
-
-    public User(){}
-
-    public User(Integer id, String name, String lastname, String email, String password, Boolean status){
-        this.id = id;
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.status = status;
-    }
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "username", unique = true, nullable = false, length = 20)
+    private String username;
+
+    @Column(name = "password", nullable = false, length = 128)
+
+    private String password;
+
+    private String name;
+
+    private String lastname;
+
+    private String email;
+
+    private Boolean status;
+
+    public User(){}
+
+    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    /**
+
+     public User(Integer id, String name, String lastname, String email, String password, Boolean status){
+     this.id = id;
+     this.name = name;
+     this.lastname = lastname;
+     this.email = email;
+     this.password = password;
+     this.status = status;
+     }
+     **/
     //@JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_category", nullable = false)
@@ -42,13 +102,5 @@ public class User {
     @JsonIgnore
     private Set<Transaction> transactions;
 
-    private String name;
 
-    private String lastname;
-
-    private String email;
-
-    private String password;
-
-    private Boolean status;
 }
