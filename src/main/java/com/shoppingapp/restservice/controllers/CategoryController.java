@@ -1,4 +1,4 @@
-/**package com.shoppingapp.restservice.controllers;
+package com.shoppingapp.restservice.controllers;
 
 import com.shoppingapp.restservice.models.*;
 import com.shoppingapp.restservice.models.repositories.ICategoryRepository;
@@ -91,4 +91,3 @@ public class CategoryController {
     }
 
 }
-**/

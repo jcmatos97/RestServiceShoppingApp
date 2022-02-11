@@ -44,6 +44,15 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+     public User(Integer id, String name, String lastname, String email, String password, Boolean status){
+     this.id = id;
+     this.name = name;
+     this.lastname = lastname;
+     this.email = email;
+     this.password = password;
+     this.status = status;
+     }
+
     @Override
     public String getPassword() {
         return password;
@@ -78,17 +87,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    /**
 
-     public User(Integer id, String name, String lastname, String email, String password, Boolean status){
-     this.id = id;
-     this.name = name;
-     this.lastname = lastname;
-     this.email = email;
-     this.password = password;
-     this.status = status;
-     }
-     **/
     //@JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_category", nullable = false)

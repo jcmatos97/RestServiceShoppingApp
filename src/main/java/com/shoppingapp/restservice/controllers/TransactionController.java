@@ -1,4 +1,4 @@
-/**package com.shoppingapp.restservice.controllers;
+package com.shoppingapp.restservice.controllers;
 
 import com.shoppingapp.restservice.models.*;
 import com.shoppingapp.restservice.models.repositories.IProductRepository;
@@ -89,4 +89,3 @@ public class TransactionController {
         transactionRepository.deleteById(id);
     }
 }
-*///
