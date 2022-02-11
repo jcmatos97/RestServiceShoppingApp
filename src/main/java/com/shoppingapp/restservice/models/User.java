@@ -18,15 +18,48 @@ import java.util.Set;
 @AllArgsConstructor
 public class User implements UserDetails {
 
+    public User(){}
+
+    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(Integer id, String name, String lastname, String username, String email, String password, Boolean status){
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+        this.username = username;
+    }
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
+
+    //@JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "id_category", nullable = false)
+    private Category category;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Address> addresses;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Transaction> transactions;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<PaymentMethod> paymentMethods;
 
     @Column(name = "username", unique = true, nullable = false, length = 20)
     private String username;
 
     @Column(name = "password", nullable = false, length = 128)
-
     private String password;
 
     private String name;
@@ -36,22 +69,6 @@ public class User implements UserDetails {
     private String email;
 
     private Boolean status;
-
-    public User(){}
-
-    public User(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.username = username;
-        this.password = password;
-    }
-
-     public User(Integer id, String name, String lastname, String email, String password, Boolean status){
-     this.id = id;
-     this.name = name;
-     this.lastname = lastname;
-     this.email = email;
-     this.password = password;
-     this.status = status;
-     }
 
     @Override
     public String getPassword() {
@@ -87,19 +104,4 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-    //@JsonBackReference
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_category", nullable = false)
-    private Category category;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Address> addresses;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Set<Transaction> transactions;
-
-
 }

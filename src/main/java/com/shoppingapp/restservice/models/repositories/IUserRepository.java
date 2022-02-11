@@ -21,5 +21,10 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
             "WHERE u.id = :idPARAM", nativeQuery = true)
     List<ArrayList> getTransactions(@Param("idPARAM") int id);
 
+    @Query(value = "SELECT pm.id, pm.name_on_card, pm.account_number, pm.expiration, pm.code, pm.country, pm.default_card, pm.status " +
+            "FROM payment_method pm JOIN user u ON u.id = pm.id_user " +
+            "WHERE pm.id_user = :idPARAM", nativeQuery = true)
+    List<ArrayList> getPaymentMethods(@Param("idPARAM") int id);
+
     User findByUsername(String username);
 }

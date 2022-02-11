@@ -60,7 +60,7 @@ public class CategoryController {
     List<User> getCategoryByIdWithUsers(@PathVariable Integer id) {
         List<User> userList = new ArrayList<>();
         categoryRepository.getUsers(id).forEach(obj -> {
-            userList.add(new User((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (String)obj.get(3), (String)obj.get(4), (Boolean)obj.get(5)));
+            userList.add(new User((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (String)obj.get(3), (String)obj.get(4), (String)obj.get(5), (Boolean)obj.get(6)));
         });
         return userList;
     }

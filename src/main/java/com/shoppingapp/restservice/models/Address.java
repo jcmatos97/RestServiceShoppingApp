@@ -28,7 +28,7 @@ public class Address {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonBackReference
+    //@JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_user", nullable = false)
     private User user;

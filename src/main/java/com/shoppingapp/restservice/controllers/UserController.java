@@ -35,12 +35,21 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/transactions")
-    List<Transaction> getUsersByIdWithTransactions(@PathVariable Integer id) {
+    List<Transaction> getUserByIdWithTransactions(@PathVariable Integer id) {
         List<Transaction> transactionList = new ArrayList<>();
         userRepository.getTransactions(id).forEach(obj -> {
             transactionList.add(new Transaction((Integer) obj.get(0), (Date) obj.get(1), (Date)obj.get(2), (Boolean)obj.get(3)));
         });
         return transactionList;
+    }
+
+    @GetMapping("/users/{id}/payment/methods")
+    List<PaymentMethod> getUserByIdWithPaymentMethods(@PathVariable Integer id) {
+        List<PaymentMethod> paymentMethodList = new ArrayList<>();
+        userRepository.getPaymentMethods(id).forEach(obj -> {
+            paymentMethodList.add(new PaymentMethod((Integer) obj.get(0), (String) obj.get(1), (String)obj.get(2), (String)obj.get(3), (String)obj.get(4), (String)obj.get(5), (Boolean)obj.get(6), (Boolean)obj.get(7)));
+        });
+        return paymentMethodList;
     }
 
     @PostMapping("/users")
@@ -55,6 +64,7 @@ public class UserController {
                     user.setName(newUser.getName());
                     user.setLastname(newUser.getLastname());
                     user.setEmail(newUser.getEmail());
+                    user.setUsername(newUser.getUsername());
                     user.setPassword(newUser.getPassword());
                     user.setStatus(newUser.getStatus());
                     return userRepository.save(newUser);

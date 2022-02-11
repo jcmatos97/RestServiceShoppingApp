@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ITransactionRepository extends JpaRepository<Transaction, Integer> {
-    @Query(value = "SELECT u.id, u.name, u.lastname, u.email, u.password, u.status " +
+    @Query(value = "SELECT u.id, u.name, u.lastname, u.username, u.email, u.password, u.status " +
             "FROM user u JOIN transaction t ON u.id = t.id_user " +
             "WHERE t.id = :idPARAM", nativeQuery = true)
     Object getUser(@Param("idPARAM") int id);
