@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoppingapp.restservice.models.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +20,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
+@Getter
+@Setter
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private String username;
+    private int id ;
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.setAuthenticationManager(authenticationManager);
@@ -44,13 +51,25 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setSubject((((User) authResult.getPrincipal()).getUsername()))
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
                 .signWith(SignatureAlgorithm.HS512, "kodigo").compact();
+
+        this.setUsername(((User) authResult.getPrincipal()).getUsername());
+        this.setId(((User) authResult.getPrincipal()).getId());
+
         response.addHeader("Authorization", "Bearer " + token);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(
-                "{\"token\":\"Bearer " + token + "\"}"
+                "{\"data\":" +
+                        "{" +
+                        "\"username\":\""+ this.getUsername() +"\"," +
+                        "\"id\":\""+ this.getId() +"\"," +
+                        "\"sessionCookie\": {" +
+                        "\"token\":\"Bearer " + token + "\"," +
+                        "\"Expiration\":\"" + new Date(System.currentTimeMillis() + 864_000_000) + "\"" +
+                        "}" +
+                        "}" +
+                     "}"
         );
-
     }
 
     @Override
