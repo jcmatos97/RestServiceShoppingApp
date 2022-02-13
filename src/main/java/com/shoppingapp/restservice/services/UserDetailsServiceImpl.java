@@ -1,8 +1,8 @@
 package com.shoppingapp.restservice.services;
 
+import com.shoppingapp.restservice.models.User;
 import com.shoppingapp.restservice.models.repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +18,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+
+        if(user == null){
+            throw new UsernameNotFoundException(username);
+        }else{
+            return user;
+        }
     }
 }

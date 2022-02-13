@@ -45,11 +45,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .setExpiration(new Date(System.currentTimeMillis() + 864_000_000))
                 .signWith(SignatureAlgorithm.HS512, "kodigo").compact();
         response.addHeader("Authorization", "Bearer " + token);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(
+                "{\"token\":\"Bearer " + token + "\"}"
+        );
+
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
                                               AuthenticationException failed) throws IOException, ServletException {
+
         super.unsuccessfulAuthentication(request, response, failed);
     }
 }
