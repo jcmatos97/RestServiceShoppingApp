@@ -33,6 +33,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and().csrf()
                 .disable().authorizeRequests()
                 .antMatchers( "/login").permitAll()
+                //Swagger URLS
+                .antMatchers( "/**/").permitAll()
+                //Controllers
                 .antMatchers( "/addresses/**/").permitAll()
                 .antMatchers( "/categories/**/").permitAll()
                 .antMatchers( "/transactions/**/").permitAll()
